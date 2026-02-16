@@ -17,15 +17,15 @@ class Team(Enum):
 
 class Player:
     
-    def __init__(self: Player, team: Team) -> None:
+    def __init__(self, team: Team) -> None:
         self.team: Team = team
         self.messages: List = []
         self.gemini: Gemini = Gemini()
         
-    def select_team(self: Player, team: Team) -> None:
+    def select_team(self, team: Team) -> None:
         self.team = team
         
-    def chat(self: Player, message: str) -> None:
+    def chat(self, message: str) -> None:
         if not self.messages:
             system_prompt = SystemPrompt.AI.value if self.team == Team.AI else SystemPrompt.HUMANITY.value
             self.messages.append(system_prompt)
@@ -33,5 +33,5 @@ class Player:
         response = self.gemini.generate_response(self.messages)
         self.messages.append(AIMessage(content=response))
     
-    def reset(self: Player) -> None:
+    def reset(self) -> None:
         self.messages = []
